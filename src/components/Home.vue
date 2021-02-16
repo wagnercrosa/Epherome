@@ -233,7 +233,7 @@ export default {
                 text: "progress.login",
                 stat: false,
             });
-            if (typeof this.select !== "undefined" && typeof this.account !== "undefined") {
+            if (typeof this.select !== "undefined" || typeof this.account !== "undefined") {
                 if (!navigator.onLine) {
                     l.info("Network unavailable. Needn't authentication. Continue start Minecraft");
                     // network unavailable, launch minecraft directly
