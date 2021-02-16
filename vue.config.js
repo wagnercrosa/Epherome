@@ -3,27 +3,33 @@ module.exports = {
         electronBuilder: {
             nodeIntegration: true,
             builderOptions: {
-                productName: 'Epherome',
-                copyright: 'Copyright © 2021 ResetPower. All rights reserved.',
-                appId: 'com.epherome',
+                productName: "Epherome",
+                copyright: "Copyright © 2021 ResetPower. All rights reserved.",
+                appId: "com.epherome",
                 asar: true,
                 compression: "maximum",
                 directories: {
-                    output: 'package'
+                    output: "package",
                 },
-                /*win: {
-                    icon: 'pubilc/icon.ico'
-                },*/
-            }
-        }
+                linux: {
+                    target: "AppImage",
+                },
+                win: {
+                    target: [
+                        {
+                            target: "portable",
+                            arch: ["x64", "ia32"],
+                        },
+                    ],
+                },
+            },
+        },
     },
     devServer: {
-        disableHostCheck: true
+        disableHostCheck: true,
     },
     configureWebpack: {
-        devtool: "source-map"
+        devtool: "source-map",
     },
-    transpileDependencies: [
-        'vuetify'
-    ]
-}
+    transpileDependencies: ["vuetify"],
+};
