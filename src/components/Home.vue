@@ -49,14 +49,11 @@
                     </v-card>
                 </v-col>
                 <v-col>
-                    <v-card color="blue lighten-1" elevation="6" style="padding: 10px">
-                        <v-icon>segment</v-icon>
+                    <v-card color="blue darken-4 white--text" elevation="6" style="padding: 10px">
+                        <v-icon color="white">segment</v-icon>
                         {{ $t("hitokoto") }}
                         <p>{{ hitokoto.content }}</p>
                         <p style="text-align: right;">From: {{ hitokoto.from }}</p>
-                        <v-icon>voicemail</v-icon>
-                        {{ $t("news") }}
-                        <p>{{ $t("text.no-news-yet") }}</p>
                     </v-card>
                 </v-col>
             </v-row>
@@ -163,7 +160,7 @@ const l = log4js.getLogger("default");
 
 export default {
     name: "Home",
-    data: () => {
+    data() {
         let acc = readProperty("accounts", []);
         let pro = readProperty("profiles", []);
         let aSel = readProperty("selected-account", 0);
@@ -196,6 +193,11 @@ export default {
             alphaWarn: true,
             hitokoto: { content: "...", from: "..." },
         };
+    },
+    mounted() {
+        fetch("https://epherome.com/api/hitokoto")
+            .then(resp => resp.json())
+            .then(json => (this.hitokoto = json));
     },
     methods: {
         change(pro) {
