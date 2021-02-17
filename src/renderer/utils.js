@@ -10,7 +10,6 @@ log4js.configure({
     },
     categories: {
         index: { appenders: ["out"], level: "debug" },
-        property: { appenders: ["out"], level: "debug" },
         auth: { appenders: ["out"], level: "debug" },
         route: { appenders: ["out"], level: "debug" },
         core: { appenders: ["out"], level: "debug" },

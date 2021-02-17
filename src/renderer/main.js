@@ -6,31 +6,24 @@ import VueI18n from "vue-i18n";
 import App from "@/App.vue";
 import vuetify from "@/plugins/vuetify";
 import Home from "@/components/Home";
-import Accounts from "@/components/Accounts";
-import Profiles from "@/components/Profiles";
-import Settings from "@/components/Settings";
-import NewAccount from "@/components/NewAccount";
-import NewProfile from "@/components/NewProfile";
-import { log4js } from "@/utils";
-import { initProperty, readProperty } from "@/property";
+import { log4js } from "@/renderer/utils";
+import { readProperty } from "@/renderer/property";
+import { ipcRenderer } from "electron";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
 import "typeface-roboto/index.css";
 import "animate.css/animate.min.css";
-import i18nMap from "./assets/language.json";
-import { ipcRenderer } from "electron";
+import i18nMap from "@/assets/language.json";
+import path from "path";
+
+let configFile = "";
+
+ipcRenderer.on("get-user-data-path", (ev, args) => {
+    configFile = args[0] + path.sep + "config.json";
+});
 
 const li = log4js.getLogger("index");
 
 li.info("### Web Page Started to Load ###");
-
-let userDataPath = "";
-
-ipcRenderer.on("userDataPath", (ev, args) => {
-    userDataPath = args[0] + "/config.json";
-});
-
-li.info("Initializing property");
-initProperty();
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
@@ -44,23 +37,23 @@ const router = new VueRouter({
         },
         {
             path: "/accounts",
-            component: Accounts,
+            component: () => import("@/components/Accounts"),
         },
         {
             path: "/profiles",
-            component: Profiles,
+            component: () => import("@/components/Profiles"),
         },
         {
             path: "/settings",
-            component: Settings,
+            component: () => import("@/components/Settings"),
         },
         {
             path: "/accounts/new-acc",
-            component: NewAccount,
+            component: () => import("@/components/NewAccount"),
         },
         {
             path: "/profiles/new-pro",
-            component: NewProfile,
+            component: () => import("@/components/NewProfile"),
         },
     ],
 });
@@ -79,4 +72,4 @@ new Vue({
     },
 }).$mount("#app");
 
-export { App, i18n, router, userDataPath };
+export { App, i18n, router, configFile };

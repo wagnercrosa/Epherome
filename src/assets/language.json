@@ -34,6 +34,8 @@
         "tip": "Tip",
         "launching": "Launching",
         "error-occurred": "Error Occurred",
+        "hitokoto": "Hitokoto",
+        "email": "Email",
         "stage": {
             "alpha": "Alpha",
             "beta": "Beta",
@@ -50,7 +52,6 @@
             "_mojang": "Mojang"
         },
         "text": {
-            "reload-required-to-reload-language": "For the changed language settings to take effect, you need to restart Epherome",
             "no-account-please-select": "You did not select an account yet, Please select one.",
             "no-internet": "The web is different for you. Not connected to the Internet, please check the network status.",
             "no-account-please-create": "You do not have an account yet, please create one.",
@@ -111,6 +112,8 @@
         "tip": "提示",
         "launching": "启动中",
         "error-occurred": "发生了错误",
+        "hitokoto": "一言",
+        "email": "邮箱",
         "stage": {
             "alpha": "内测版",
             "beta": "公测版",
@@ -127,7 +130,6 @@
             "_mojang": "Mojang 账户"
         },
         "text": {
-            "reload-required-to-reload-language": "要使更改的语言设置生效，你需要重新启动 Epherome",
             "no-account-please-select": "您尚未选择一个帐户，请选择一个。",
             "no-internet": "Web 因你而不同。未连接到互联网，请检查网络状况。",
             "no-account-please-create": "您还没有账户，请创建一个。",

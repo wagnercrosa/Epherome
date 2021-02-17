@@ -7,14 +7,14 @@
             <v-tab> {{ $t("mode.offline") }}</v-tab>
             <v-tab-item
                 ><br />
-                <v-text-field id="mo-un" :label="$t('username')"></v-text-field>
+                <v-text-field id="mo-un" :label="$t('email')"></v-text-field>
                 <v-text-field id="mo-pw" :label="$t('password')" type="password"></v-text-field>
             </v-tab-item>
             <v-tab-item><br /><!--Microsoft Authentication--></v-tab-item>
             <v-tab-item
                 ><br />
                 <v-text-field id="au-as" :label="$t('authserver')"></v-text-field>
-                <v-text-field id="au-un" :label="$t('username')"></v-text-field>
+                <v-text-field id="au-un" :label="$t('email')"></v-text-field>
                 <v-text-field id="au-pw" :label="$t('password')" type="password"></v-text-field>
             </v-tab-item>
             <v-tab-item
@@ -48,9 +48,9 @@
 </template>
 
 <script>
-import { backPage } from "@/route";
-import { authenticate, MOJANG_AUTHSERVER_URL } from "@/auth";
-import { operateProperty } from "@/property";
+import { backPage } from "@/renderer/route";
+import { authenticate, MOJANG_AUTHSERVER_URL } from "@/renderer/auth";
+import { operateProperty } from "@/renderer/property";
 import {
     log4js,
     getArrayNewElementId,
@@ -59,7 +59,7 @@ import {
     genOfflineToken,
     e,
     isEmpty,
-} from "@/utils";
+} from "@/renderer/utils";
 const l = log4js.getLogger("default");
 
 export default {

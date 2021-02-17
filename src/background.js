@@ -5,9 +5,7 @@ import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
 import log4js from "log4js";
 import os from "os";
-import Store from "electron-store";
-
-Store.initRenderer();
+import "@/main/property";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 const userDataPath = app.getPath("userData");
@@ -18,6 +16,7 @@ log4js.configure({
     },
     categories: {
         starter: { appenders: ["out"], level: "debug" },
+        property: { appenders: ["out"], level: "debug" },
         default: { appenders: ["out"], level: "debug" },
     },
 });
@@ -42,14 +41,11 @@ async function createWindow() {
     const win = new BrowserWindow({
         width: 800,
         height: 600,
+        backgroundColor: "#e0e0e0",
         webPreferences: {
             nodeIntegration: true,
             webSecurity: false,
         },
-    });
-
-    win.on("ready-to-show", () => {
-        win.webContents.send("userDataPath", [userDataPath]);
     });
 
     if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -58,6 +54,10 @@ async function createWindow() {
         createProtocol("app");
         await win.loadURL("app://./index.html");
     }
+
+    win.on("ready-to-show", () => {
+        win.webContents.send("get-user-data-path", [userDataPath]);
+    });
 
     ipcMain.on("open-dir-browse-dialog", (ev, args) => {
         dialog
@@ -102,3 +102,5 @@ if (isDevelopment) {
         });
     }
 }
+
+export { log4js };

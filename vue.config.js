@@ -32,4 +32,7 @@ module.exports = {
         devtool: "source-map",
     },
     transpileDependencies: ["vuetify"],
+    configureWebpack: {
+        entry: "./src/renderer/main.js",
+    },
 };

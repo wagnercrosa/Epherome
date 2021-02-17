@@ -3,5 +3,5 @@
 export default {
     name: "Epherome",
     stage: "stage.alpha",
-    version: "0.0.1",
+    version: "0.0.2",
 };

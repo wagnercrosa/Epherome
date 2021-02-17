@@ -49,14 +49,20 @@ v<template>
                                     </v-card-text>
                                     <v-card-actions>
                                         <v-spacer></v-spacer>
-                                        <v-btn color="green darken-1" text @click="dialog = false">
+                                        <v-btn
+                                            color="green darken-1"
+                                            text
+                                            v-on:click="dialog = false"
+                                        >
                                             {{ $t("cancel") }}
                                         </v-btn>
                                         <v-btn
                                             color="green darken-1"
                                             text
-                                            @click="dialog = false"
-                                            v-on:click="remove(a.id)"
+                                            v-on:click="
+                                                remove(a.id);
+                                                dialog = false;
+                                            "
                                         >
                                             {{ $t("confirm") }}
                                         </v-btn>
@@ -72,9 +78,9 @@ v<template>
 </template>
 
 <script>
-import { log4js } from "@/utils";
-import { jumpPage } from "@/route";
-import { readProperty, writeProperty, operateProperty } from "@/property";
+import { log4js } from "@/renderer/utils";
+import { jumpPage } from "@/renderer/route";
+import { readProperty, writeProperty, operateProperty } from "@/renderer/property";
 const l = log4js.getLogger("default");
 
 export default {

@@ -1,7 +1,7 @@
 "use strict";
 
-import { log4js, isEmpty, isNotEmpty, e } from "@/utils";
-import { App as vm, i18n, router } from "@/main";
+import { log4js, isEmpty, isNotEmpty, e } from "@/renderer/utils";
+import { App as vm, i18n, router } from "@/renderer/main";
 
 const lr = log4js.getLogger("route");
 

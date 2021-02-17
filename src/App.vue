@@ -27,8 +27,8 @@
 </template>
 
 <script>
-import { backPage, togglePage } from "@/route";
-import { e } from "@/utils";
+import { backPage, togglePage } from "@/renderer/route";
+import { e } from "@/renderer/utils";
 
 export default {
     name: "App",

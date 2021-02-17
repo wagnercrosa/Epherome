@@ -125,9 +125,9 @@
 </template>
 
 <script>
-import { log4js, getArrayElementById } from "@/utils";
-import { jumpPage } from "@/route";
-import { readProperty, writeProperty, operateProperty } from "@/property";
+import { log4js, getArrayElementById } from "@/renderer/utils";
+import { jumpPage } from "@/renderer/route";
+import { readProperty, writeProperty, operateProperty } from "@/renderer/property";
 import { ipcRenderer } from "electron";
 const l = log4js.getLogger("default");
 

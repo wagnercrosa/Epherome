@@ -25,9 +25,9 @@
     </v-container>
 </template>
 <script>
-import { backPage } from "@/route";
-import { operateProperty } from "@/property";
-import { log4js, getArrayNewElementId, isNotEmpty } from "@/utils";
+import { backPage } from "@/renderer/route";
+import { operateProperty } from "@/renderer/property";
+import { log4js, getArrayNewElementId, isNotEmpty } from "@/renderer/utils";
 import { ipcRenderer } from "electron";
 
 const l = log4js.getLogger("default");

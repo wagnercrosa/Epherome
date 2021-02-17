@@ -2,7 +2,7 @@ import { spawn } from "child_process";
 import StreamZip from "node-stream-zip";
 import os from "os";
 import fs from "fs";
-import { log4js, removeSuffix, removePrefix } from "@/utils";
+import { log4js, removeSuffix, removePrefix } from "@/renderer/utils";
 
 const OPERATING_SYSTEM = os.platform();
 const OPERATING_VERSION = os.release();
@@ -82,7 +82,7 @@ function isCompliant(rules) {
 }
 
 /**
- * options: (profile: profile, name: string, uuid: string, token: string, details: array<detail>, java: string, reloadDetails: function, setSpeed: function, done: function)
+ * options: (profile: profile, name: string, uuid: string, token: string, details: array<detail>, java: string, setSpeed: function, done: function)
  * errCall: function(type, msg, name) // type: "Epherome" or "Minecraft", name: "TypeError" and so on
  */
 function launchMinecraft(options, errCall) {
@@ -104,7 +104,6 @@ function launchMinecraftImplement(options, errCall) {
     let token = options["token"];
     let details = options["details"];
     let javaPath = options["java"];
-    let reloadDetails = options["reloadDetails"];
     // let setSpeed = options["setSpeed"];
     // start to analyze json file
     lc.info("start to analyze json file");
@@ -112,7 +111,6 @@ function launchMinecraftImplement(options, errCall) {
         text: "progress.analyze-json",
         stat: false,
     });
-    reloadDetails();
     let dir = removeSuffix(profile["dir"], "/");
     let data = fs.readFileSync(`${dir}/versions/${ver}/${ver}.json`);
     let parsed = JSON.parse(data);
@@ -159,7 +157,6 @@ function launchMinecraftImplement(options, errCall) {
         text: "progress.down-asset",
         stat: false,
     });
-    reloadDetails();
     // TODO downloading missing assets
     details[2]["stat"] = true;
     // finished
@@ -170,7 +167,6 @@ function launchMinecraftImplement(options, errCall) {
         text: "progress.down-lib",
         stat: false,
     });
-    reloadDetails();
     // TODO downloading missing libraries
     details[3]["stat"] = true;
     // finished
@@ -181,7 +177,6 @@ function launchMinecraftImplement(options, errCall) {
         text: "progress.unzip",
         stat: false,
     });
-    reloadDetails();
     let nativeLibs = obj["nativeLibs"];
     for (let i in nativeLibs) {
         let file = nativeLibs[i];
@@ -239,7 +234,6 @@ function launchMinecraftImplement(options, errCall) {
         text: "progress.running",
         stat: false,
     });
-    reloadDetails();
 
     let firstTimeToReceiveStdout = true;
 

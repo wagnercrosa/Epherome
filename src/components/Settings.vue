@@ -13,17 +13,6 @@
             {{ $t("about") }}
         </v-tab>
         <v-tab-item>
-            <v-banner v-model="bannerVisible" transition="slide-y-transition">
-                <v-avatar>
-                    <v-icon color="warning">warning</v-icon>
-                </v-avatar>
-                {{ $t("text.reload-required-to-reload-language") }}
-                <template v-slot:actions="{ dismiss }">
-                    <v-btn text color="primary" @click="dismiss">
-                        {{ $t("dismiss") }}
-                    </v-btn>
-                </template>
-            </v-banner>
             <v-container>
                 <v-select
                     v-model="selectedLang"
@@ -66,7 +55,7 @@
                 <span>V8: {{ v8Version }}</span
                 ><br /><br />
                 <span
-                    >{{ $t("user-data-path") }}: <strong>{{ userDataPath }}</strong></span
+                    >{{ $t("user-data-path") }}: <strong>{{ configFile }}</strong></span
                 ><br /><br />
                 <span
                     >{{ $t("official-site") }}:
@@ -89,12 +78,12 @@
 </template>
 
 <script>
-import { log4js } from "@/utils";
-import { readProperty, writeProperty } from "@/property";
-import { backPage } from "@/route";
-import Epherome from "@/epherome";
-import { userDataPath as udp } from "@/main";
+import { log4js } from "@/renderer/utils";
+import { readProperty, writeProperty } from "@/renderer/property";
+import { backPage, onRouteChange } from "@/renderer/route";
+import Epherome from "@/renderer/epherome";
 import { shell } from "electron";
+import { configFile as cf, i18n } from "@/renderer/main";
 
 const openExternal = shell.openExternal;
 const l = log4js.getLogger("default");
@@ -109,7 +98,7 @@ export default {
             chromeVersion: process.versions.chrome,
             nodeVersion: process.versions.node,
             v8Version: process.versions.v8,
-            userDataPath: udp,
+            configFile: cf,
             langs: [
                 {
                     locale: "en-us",
@@ -123,7 +112,6 @@ export default {
             formerLang: readProperty("language"),
             selectedLang: readProperty("language"),
             javaPathContent: readProperty("java-path"),
-            bannerVisible: false,
         };
     },
     methods: {
@@ -140,7 +128,9 @@ export default {
             writeProperty("language", this.selectedLang);
             l.debug("Language locale: " + this.selectedLang);
             if (this.formerLang !== this.selectedLang) {
-                this.bannerVisible = true;
+                this.formerLang = this.selectedLang;
+                i18n.locale = this.selectedLang;
+                onRouteChange("settings", "");
             }
         },
     },

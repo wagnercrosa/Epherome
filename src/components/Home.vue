@@ -10,10 +10,9 @@
                         <span v-if="typeof username === 'undefined'">
                             {{ $t("text.no-account-please-select") }}
                         </span>
-                        <span v-else
-                            >{{ $t("hello") }}, <strong>{{ username }}</strong
-                            >!</span
-                        >
+                        <span v-else>
+                            {{ $t("hello") }},<strong> {{ username }} </strong>!
+                        </span>
                     </v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
@@ -51,6 +50,10 @@
                 </v-col>
                 <v-col>
                     <v-card color="blue lighten-1" elevation="6" style="padding: 10px">
+                        <v-icon>segment</v-icon>
+                        {{ $t("hitokoto") }}
+                        <p>{{ hitokoto.content }}</p>
+                        <p style="text-align: right;">From: {{ hitokoto.from }}</p>
                         <v-icon>voicemail</v-icon>
                         {{ $t("news") }}
                         <p>{{ $t("text.no-news-yet") }}</p>
@@ -85,12 +88,12 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="secondary white--text" v-on:click="onPasswordCancel">{{
-                        $t("cancel")
-                    }}</v-btn>
-                    <v-btn color="green darken-1 white--text" v-on:click="onPasswordConfirm">{{
-                        $t("confirm")
-                    }}</v-btn>
+                    <v-btn color="secondary white--text" v-on:click="onPasswordCancel"
+                        >{{ $t("cancel") }}
+                    </v-btn>
+                    <v-btn color="green darken-1 white--text" v-on:click="onPasswordConfirm"
+                        >{{ $t("confirm") }}
+                    </v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -110,12 +113,12 @@
                 <v-card-text>
                     <v-list>
                         <v-list-item v-for="d in details" v-bind:key="d.text">
-                            <v-list-item-avatar v-if="d.stat"
-                                ><v-icon>check</v-icon></v-list-item-avatar
-                            >
-                            <v-list-item-avatar v-else
-                                ><v-icon>arrow_forward</v-icon></v-list-item-avatar
-                            >
+                            <v-list-item-avatar v-if="d.stat">
+                                <v-icon>check</v-icon>
+                            </v-list-item-avatar>
+                            <v-list-item-avatar v-else>
+                                <v-icon>arrow_forward</v-icon>
+                            </v-list-item-avatar>
                             <v-list-item-content>{{ $t(d.text) }}</v-list-item-content>
                         </v-list-item>
                     </v-list>
@@ -151,10 +154,10 @@
 </template>
 
 <script>
-import { readProperty, writeProperty, operateProperty } from "@/property";
-import { getArrayElementById, log4js, resolveAuthServerURL } from "@/utils";
-import { MOJANG_AUTHSERVER_URL, authenticate, refresh, validate } from "@/auth";
-import { launchMinecraft } from "@/core";
+import { readProperty, writeProperty, operateProperty } from "@/renderer/property";
+import { getArrayElementById, log4js, resolveAuthServerURL } from "@/renderer/utils";
+import { MOJANG_AUTHSERVER_URL, authenticate, refresh, validate } from "@/renderer/auth";
+import { launchMinecraft } from "@/renderer/core";
 
 const l = log4js.getLogger("default");
 
@@ -191,6 +194,7 @@ export default {
             currentErrorType: "",
             currentErrorMessage: "",
             alphaWarn: true,
+            hitokoto: { content: "...", from: "..." },
         };
     },
     methods: {
@@ -204,7 +208,6 @@ export default {
             this.launchDialog = false;
         },
         launch() {
-            this.launchDialog = true;
             const continueStartMinecraft = () => {
                 this.details[0].stat = true;
                 launchMinecraft(
@@ -215,7 +218,6 @@ export default {
                         token: this.account["token"],
                         java: readProperty("java-path"),
                         details: this.details,
-                        reloadDetails: () => {},
                         setSpeed: () => {},
                         done: () => {
                             this.launchDialog = false;
@@ -228,12 +230,13 @@ export default {
                     }
                 );
             };
-            this.details = [];
-            this.details.push({
-                text: "progress.login",
-                stat: false,
-            });
             if (typeof this.select !== "undefined" || typeof this.account !== "undefined") {
+                this.launchDialog = true;
+                this.details = [];
+                this.details.push({
+                    text: "progress.login",
+                    stat: false,
+                });
                 if (!navigator.onLine) {
                     l.info("Network unavailable. Needn't authentication. Continue start Minecraft");
                     // network unavailable, launch minecraft directly
