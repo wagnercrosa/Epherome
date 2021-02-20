@@ -6,6 +6,7 @@ import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
 import log4js from "log4js";
 import os from "os";
 import "@/main/config";
+import "@/main/system";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 const userDataPath = app.getPath("userData");

@@ -101,12 +101,16 @@ export default {
             configFile: cf,
             langs: [
                 {
+                    locale: "zh-cn",
+                    text: "简体中文",
+                },
+                {
                     locale: "en-us",
                     text: "English",
                 },
                 {
-                    locale: "zh-cn",
-                    text: "简体中文",
+                    locale: "ja-jp",
+                    text: "日本語",
                 },
             ],
             formerLang: readProperty("language"),
