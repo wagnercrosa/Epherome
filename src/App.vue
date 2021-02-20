@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-app-bar color="primary white--text" app>
+        <v-app-bar color="primary white--text" style="-webkit-app-region: drag;" dense app>
             <v-btn v-on:click="backPage" color="white" icon>
                 <v-icon id="app-bar-left-icon">home</v-icon>
             </v-btn>
@@ -43,8 +43,14 @@ export default {
                 appBarLeftIcon.innerText = "arrow_back";
             }
         },
+        updateIcon(icon) {
+            e("app-bar-left-icon").innerText = icon;
+        },
         backPage() {
-            backPage();
+            let appBarLeftIcon = e("app-bar-left-icon");
+            if (appBarLeftIcon.innerText === "arrow_back") {
+                backPage();
+            }
         },
         togglePage(name) {
             togglePage(name);

@@ -30,7 +30,7 @@
                 <v-btn
                     color="secondary white--text"
                     v-on:click="backPage"
-                    style="margin-right: 5px;"
+                    style="margin-right: 5px"
                     depressed
                 >
                     {{ $t("cancel") }}
@@ -54,21 +54,21 @@
                 ><br />
                 <span>V8: {{ v8Version }}</span
                 ><br /><br />
-                <span
-                    >{{ $t("user-data-path") }}: <strong>{{ configFile }}</strong></span
+                <span>
+                    {{ $t("user-data-path") }}: <strong>{{ configFile }}</strong> </span
                 ><br /><br />
-                <span
-                    >{{ $t("official-site") }}:
-                    <a v-on:click="openExternal('https://epherome.com')"
-                        >https://epherome.com</a
-                    ></span
+                <span>
+                    {{ $t("official-site") }}:
+                    <a v-on:click="openExternal('https://epherome.com')">
+                        https://epherome.com
+                    </a> </span
                 ><br />
-                <span
-                    >GitHub:
+                <span>
+                    GitHub:
                     <a v-on:click="openExternal('https://github.com/ResetPower/Epherome')">
                         https://github.com/ResetPower/Epherome
-                    </a></span
-                >
+                    </a>
+                </span>
                 <br />
                 <span>Copyright © 2021 ResetPower. All rights reserved.</span><br />
                 <span>{{ $t("oss") }} | GNU General Public License 3.0</span><br />

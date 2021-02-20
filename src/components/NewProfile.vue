@@ -67,7 +67,7 @@ export default {
             backPage();
         },
         browse() {
-            ipcRenderer.on("close-dir-browse-dialog", (ev, args) => {
+            ipcRenderer.once("close-dir-browse-dialog", (ev, args) => {
                 if (!args.canceled) {
                     this.dir = args.filePaths[0];
                 }

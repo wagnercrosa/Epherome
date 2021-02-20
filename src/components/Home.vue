@@ -54,6 +54,10 @@
                         {{ $t("hitokoto") }}
                         <p>{{ hitokoto.content }}</p>
                         <p style="text-align: right;">From: {{ hitokoto.from }}</p>
+                        <v-divider></v-divider>
+                        <v-btn v-on:click="reloadHitokoto" color="white" icon
+                            ><v-icon>refresh</v-icon></v-btn
+                        >
                     </v-card>
                 </v-col>
             </v-row>
@@ -195,9 +199,7 @@ export default {
         };
     },
     mounted() {
-        fetch("https://epherome.com/api/hitokoto")
-            .then(resp => resp.json())
-            .then(json => (this.hitokoto = json));
+        this.reloadHitokoto();
     },
     methods: {
         change(pro) {
@@ -208,6 +210,12 @@ export default {
             l.info("Password input canceled. Canceled start Minecraft");
             this.requestPasswordDialog = false;
             this.launchDialog = false;
+        },
+        reloadHitokoto() {
+            this.hitokoto = { content: "...", from: "..." };
+            fetch("https://epherome.com/api/hitokoto")
+                .then(resp => resp.json())
+                .then(json => (this.hitokoto = json));
         },
         launch() {
             const continueStartMinecraft = () => {

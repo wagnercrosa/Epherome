@@ -44,6 +44,10 @@ function onRouteChange(to, from) {
             case "new-pro":
                 vm.methods.updateTitle(i18n.messages[i18n.locale]["new-profile"]);
                 break;
+            case "installer":
+                vm.methods.updateTitle(i18n.messages[i18n.locale]["initialize"]);
+                vm.methods.updateIcon("get_app");
+                break;
         }
     }
     lr.info("Updated pages");
@@ -70,7 +74,7 @@ function backPage() {
         }
         onRouteChange(getPage(link), page); // update pages
         router.replace(link);
-        lr.info("Back pages triggered");
+        lr.debug("Back pages triggered");
     }
 }
 
@@ -81,7 +85,7 @@ function jumpPage(name) {
         onRouteChange(name, page); // update pages
         router.replace(uri + "/" + name); // append pages on the current uri
     }
-    lr.info(`Jump page triggered. From ${page} to ${name}`);
+    lr.debug(`Jump page triggered. From ${page} to ${name}`);
 }
 
 /**
@@ -93,7 +97,7 @@ function togglePage(name) {
         onRouteChange(name, page); // update pages
         router.replace("/" + name);
     }
-    lr.info(`Toggle page triggered. From ${page} to ${name}`);
+    lr.debug(`Toggle page triggered. From ${page} to ${name}`);
 }
 
 export { onRouteChange, getPage, backPage, jumpPage, togglePage };

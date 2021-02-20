@@ -11,9 +11,8 @@ module.exports = {
                 directories: {
                     output: "package",
                 },
-                linux: {
-                    target: "AppImage",
-                },
+                mac: {},
+                linux: {},
                 win: {
                     target: [
                         {
@@ -30,9 +29,7 @@ module.exports = {
     },
     configureWebpack: {
         devtool: "source-map",
-    },
-    transpileDependencies: ["vuetify"],
-    configureWebpack: {
         entry: "./src/renderer/main.js",
     },
+    transpileDependencies: ["vuetify"],
 };

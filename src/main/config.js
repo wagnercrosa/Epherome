@@ -15,6 +15,8 @@ if (typeof property["language"] === "undefined") {
     let sysLang = app.getLocale().toLowerCase();
     if (sysLang.startsWith("zh")) {
         property["language"] = "zh-cn";
+    } else if (sysLang.startsWith("ja")) {
+        property["language"] = "ja-jp";
     } else {
         property["language"] = "en-us";
     }
@@ -29,7 +31,7 @@ function saveToDisk() {
     fs.writeFileSync(configFile, JSON.stringify(property));
 }
 
-ipcMain.on("cache-get", (ev, args) => {
+ipcMain.on("cache-get", ev => {
     lp.debug("Cache get triggered");
     ev.returnValue = property;
 });
@@ -39,7 +41,7 @@ ipcMain.on("property-get", (ev, args) => {
     ev.returnValue = property[args[0]];
 });
 
-ipcMain.on("property-set", (ev, args) => {
+ipcMain.on("property-set", (_ev, args) => {
     lp.debug("Property set triggered");
     property[args[0]] = args[1];
     saveToDisk();

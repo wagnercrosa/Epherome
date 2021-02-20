@@ -91,6 +91,16 @@ function getArrayNewElementId(arr) {
     return len === 0 ? 0 : arr[len - 1]["id"] + 1;
 }
 
+function getArrayElementByParam(arr, par, val) {
+    for (let i in arr) {
+        let e = arr[i];
+        if (e[par] === val) {
+            return e;
+        }
+    }
+    return undefined;
+}
+
 export {
     log4js,
     e,
@@ -103,4 +113,5 @@ export {
     resolveAuthServerURL,
     getArrayElementById,
     getArrayNewElementId,
+    getArrayElementByParam,
 };

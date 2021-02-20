@@ -1,11 +1,11 @@
 "use strict";
 
-import { app, protocol, BrowserWindow, ipcMain, dialog } from "electron";
+import { app, protocol, BrowserWindow } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
 import log4js from "log4js";
 import os from "os";
-import "@/main/property";
+import "@/main/config";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 const userDataPath = app.getPath("userData");
@@ -37,11 +37,15 @@ protocol.registerSchemesAsPrivileged([
     { scheme: "app", privileges: { secure: true, standard: true } },
 ]);
 
+let win = undefined;
+
 async function createWindow() {
-    const win = new BrowserWindow({
+    win = new BrowserWindow({
         width: 800,
         height: 600,
         backgroundColor: "#e0e0e0",
+        autoHideMenuBar: true,
+        frame: false,
         webPreferences: {
             nodeIntegration: true,
             webSecurity: false,
@@ -56,17 +60,7 @@ async function createWindow() {
     }
 
     win.on("ready-to-show", () => {
-        win.webContents.send("get-user-data-path", [userDataPath]);
-    });
-
-    ipcMain.on("open-dir-browse-dialog", (ev, args) => {
-        dialog
-            .showOpenDialog(win, {
-                properties: ["openDirectory"],
-            })
-            .then(data => {
-                win.webContents.send("close-dir-browse-dialog", data);
-            });
+        win.webContents.send("get-basic-vars", [userDataPath, process.env.JAVA_HOME]);
     });
 }
 
@@ -75,9 +69,11 @@ app.on("window-all-closed", () => {
         app.quit();
     }
 });
+
 app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
 });
+
 app.on("ready", async () => {
     if (isDevelopment && !process.env.IS_TEST) {
         try {
@@ -103,4 +99,4 @@ if (isDevelopment) {
     }
 }
 
-export { log4js };
+export { log4js, win };

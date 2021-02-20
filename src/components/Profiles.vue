@@ -5,9 +5,11 @@
                 <v-icon>add</v-icon>
                 {{ $t("create") }}
             </v-btn>
-            <p v-if="profiles.length === 0">
-                {{ $t("text.no-profile-please-create") }}
-            </p>
+            <br /><br />
+            <v-alert border="left" color="warning white--text" v-if="profiles.length === 0">
+                <v-avatar><v-icon color="white">warning</v-icon></v-avatar>
+                <span>{{ $t("text.no-profile-please-create") }}</span>
+            </v-alert>
             <v-list-item v-for="a in profiles" :key="a.id" two-line v-else>
                 <v-list-item-avatar>
                     <v-btn color="pink" v-if="selected === a.id" icon>
@@ -191,7 +193,7 @@ export default {
             jumpPage(name);
         },
         browse() {
-            ipcRenderer.on("close-dir-browse-dialog", (ev, args) => {
+            ipcRenderer.once("close-dir-browse-dialog", (ev, args) => {
                 if (!args.canceled) {
                     this.dir = args.filePaths[0];
                 }
