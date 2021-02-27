@@ -1,5 +1,7 @@
 "use strict";
 
+import { ipcRenderer } from "electron";
+
 const MOJANG_AUTHSERVER_URL = "https://authserver.mojang.com";
 
 function isSuccess(code) {
@@ -88,8 +90,11 @@ function validate(url, token, callback) {
 
 // === microsoft authentication part ===
 
-function getAuthCode() {
-    // TODO MS Auth
+function getAuthCode(callback) {
+    ipcRenderer.once("ms-auth", (_ev, args) => {
+        callback(args);
+    });
+    ipcRenderer.send("ms-auth");
 }
 
 export { isSuccess, authenticate, validate, refresh, getAuthCode, MOJANG_AUTHSERVER_URL };

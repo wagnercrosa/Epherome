@@ -60,6 +60,7 @@ import {
     isEmpty,
 } from "@/renderer/utils";
 import { log4js } from "@/renderer/main";
+import { getAuthCode } from "../renderer/auth";
 const l = log4js.getLogger("default");
 
 export default {
@@ -112,8 +113,10 @@ export default {
                     }
                 });
             } else if (tab === 1) {
-                // microsoft account
-                this.loading = false;
+                getAuthCode(code => {
+                    l.debug("Microsoft Authentication Code: " + code);
+                    this.loading = false;
+                });
             } else if (tab === 2) {
                 // authlib injector
                 let as = e("au-as").value;
