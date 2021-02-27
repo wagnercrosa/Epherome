@@ -27,7 +27,8 @@
 <script>
 import { backPage } from "@/renderer/route";
 import { operateProperty } from "@/renderer/property";
-import { log4js, getArrayNewElementId, isNotEmpty } from "@/renderer/utils";
+import { getArrayNewElementId, isNotEmpty } from "@/renderer/utils";
+import { log4js } from "@/renderer/main";
 import { ipcRenderer } from "electron";
 
 const l = log4js.getLogger("default");

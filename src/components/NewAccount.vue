@@ -52,7 +52,6 @@ import { backPage } from "@/renderer/route";
 import { authenticate, MOJANG_AUTHSERVER_URL } from "@/renderer/auth";
 import { operateProperty } from "@/renderer/property";
 import {
-    log4js,
     getArrayNewElementId,
     resolveAuthServerURL,
     genUUID,
@@ -60,6 +59,7 @@ import {
     e,
     isEmpty,
 } from "@/renderer/utils";
+import { log4js } from "@/renderer/main";
 const l = log4js.getLogger("default");
 
 export default {

@@ -42,6 +42,15 @@
     "configure-java": "Configure Java",
     "initialize": "Initialize",
     "congratulations": "Congratulations!",
+    "log-path": "Log Directory",
+    "reinit": "Reinitialize Epherome",
+    "title-theme": "Theme of Title Bar",
+    "tt-eph": "Epherome Style",
+    "tt-os": "Follow Operating System",
+    "tt-eph-desc": "Use Epherome title bar.",
+    "tt-os-desc": "Use the title bar provided by the operating system or your desktop environment.",
+    "current": "Current",
+    "os": "Operating System",
     "stage": {
         "alpha": "Alpha",
         "beta": "Beta",
@@ -76,7 +85,8 @@
         "choose-lang": "Which language do you speak?",
         "edit-in-settings": "You can modify it in the settings at any time.",
         "found-java-in-ur-env": "We found the Java Path in your environment variables. If it is wrong, you can modify it below.",
-        "initialize-done": "You have completed all settings, click \"Finish\" to start using Epherome."
+        "initialize-done": "You have completed all settings, click \"Finish\" to start using Epherome.",
+        "restart-required": "This setting will take effect the next time you start Epherome."
     },
     "progress": {
         "login": "Log In",

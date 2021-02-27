@@ -1,22 +1,6 @@
 "use strict";
 
-import log4js from "log4js";
-
 const JWT_META_BASE64 = "eyJhbGciOiAiTk9ORSIsICJ0eXBlIjogIkpXVCJ9";
-
-log4js.configure({
-    appenders: {
-        out: { type: "stdout" },
-    },
-    categories: {
-        index: { appenders: ["out"], level: "debug" },
-        auth: { appenders: ["out"], level: "debug" },
-        route: { appenders: ["out"], level: "debug" },
-        core: { appenders: ["out"], level: "debug" },
-        minecraft: { appenders: ["out"], level: "debug" },
-        default: { appenders: ["out"], level: "debug" },
-    },
-});
 
 // get element from id
 function e(id) {
@@ -77,6 +61,7 @@ function resolveAuthServerURL(server) {
     return ret;
 }
 
+// get element by "id"
 function getArrayElementById(arr, id) {
     for (let i in arr) {
         if (arr[i]["id"] === id) {
@@ -86,11 +71,23 @@ function getArrayElementById(arr, id) {
     return undefined;
 }
 
+// get index by "id"
+function getArrayIndexById(arr, id) {
+    for (let i in arr) {
+        if (arr[i]["id"] === id) {
+            return i;
+        }
+    }
+    return undefined;
+}
+
+// get "id" of the last item and plus 1
 function getArrayNewElementId(arr) {
     let len = arr.length;
     return len === 0 ? 0 : arr[len - 1]["id"] + 1;
 }
 
+// search the first element in array who have param "par" and "par" === "val"
 function getArrayElementByParam(arr, par, val) {
     for (let i in arr) {
         let e = arr[i];
@@ -102,7 +99,6 @@ function getArrayElementByParam(arr, par, val) {
 }
 
 export {
-    log4js,
     e,
     genUUID,
     genOfflineToken,
@@ -114,4 +110,5 @@ export {
     getArrayElementById,
     getArrayNewElementId,
     getArrayElementByParam,
+    getArrayIndexById,
 };

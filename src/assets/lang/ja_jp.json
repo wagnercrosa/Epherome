@@ -42,19 +42,28 @@
     "configure-java": "Javaについて",
     "initialize": "初期化",
     "congratulations": "おめでとうございます！",
+    "log-path": "ログのパス",
+    "reinit": "再初期化 Epherome",
+    "title-theme": "タイトルバーのテーマ",
+    "tt-eph": "Epheromeのスタイル",
+    "tt-os": "システムをフォロー",
+    "tt-eph-desc": "Epheromeのタイトルバーを使用です。",
+    "tt-os-desc": "オペレーティングシステムまたはデスクトップ環境が提供するタイトルバーを使用します。",
+    "current": "現在の選択",
+    "os": "オプレーティングシステム",
     "stage": {
         "alpha": "アルファ",
         "beta": "ベータ",
         "release": "リリース"
     },
     "mode": {
-        "offline": "オフラインアカウント",
-        "authlib": "Authlibインジェクター",
-        "microsoft": "マイクロソフトアカウント",
-        "mojang": "Mojangアカウント",
+        "offline": "オフライン",
+        "authlib": "Authlib Injector",
+        "microsoft": "Microsoft",
+        "mojang": "Mojang",
         "_offline": "オフライン",
         "_authlib": "Authlib",
-        "_microsoft": "マイクロソフト",
+        "_microsoft": "Microsoft",
         "_mojang": "Mojang"
     },
     "text": {
@@ -76,7 +85,8 @@
         "choose-lang": "どの言語を使用していますか",
         "edit-in-settings": "設定でいつでも変更できます。",
         "found-java-in-ur-env": "環境変数にJavaパスが見つかりました。 間違っている場合は、以下で変更できます。",
-        "initialize-done": "すべての設定が完了したら、「完了」をクリックしてEpheromeの使用を開始します。"
+        "initialize-done": "すべての設定が完了したら、「完了」をクリックしてEpheromeの使用を開始します。",
+        "restart-required": "この設定は、次にEpheromeを起動したときに有効になります。"
     },
     "progress": {
         "login": "ログイン",

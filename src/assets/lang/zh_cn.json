@@ -42,6 +42,16 @@
     "configure-java": "配置 Java",
     "initialize": "初始化",
     "congratulations": "恭喜你！",
+    "log-path": "日志文件路径",
+    "reinit": "重新初始化 Epherome",
+    "configure-title-theme": "配置标题栏样式",
+    "title-theme": "标题栏样式",
+    "tt-eph": "Epherome 样式",
+    "tt-os": "操作系统样式",
+    "tt-eph-desc": "使用 Epherome 标题栏。",
+    "tt-os-desc": "使用操作系统或您的桌面环境提供的标题栏。",
+    "current": "当前",
+    "os": "操作系统",
     "stage": {
         "alpha": "内测版",
         "beta": "公测版",
@@ -77,7 +87,8 @@
         "edit-in-settings": "您可随时在设置中修改它。",
         "did-u-install-java": "您安装了 Java 吗？如果您安装了 Java，请在下方输入您的 Java 路径。",
         "found-java-in-ur-env": "我们在您的环境变量中找到了 Java 路径。如果它是错误的，您可以在下方修改。",
-        "initialize-done": "您已完成所有设置，点击「完成」以开始使用 Epherome。"
+        "initialize-done": "您已完成所有设置，点击「完成」以开始使用 Epherome。",
+        "restart-required": "该设置会在您下次启动 Epherome 时生效。"
     },
     "progress": {
         "login": "登录",

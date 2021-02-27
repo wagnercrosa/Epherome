@@ -1,26 +1,49 @@
 "use strict";
 
+import { ipcRenderer } from "electron";
+import path from "path";
 import Vue from "vue";
 import VueRouter from "vue-router";
 import VueI18n from "vue-i18n";
-import App from "@/App";
+import log4js from "log4js";
 import vuetify from "@/plugins/vuetify";
-import { log4js } from "@/renderer/utils";
-import { readProperty } from "@/renderer/property";
-import { ipcRenderer } from "electron";
+import App from "@/App";
+import "@mdi/font/css/materialdesignicons.min.css";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
 import "typeface-roboto/index.css";
 import "animate.css/animate.min.css";
-import path from "path";
-import { onRouteChange } from "./route";
 
+// get some basic variables from the main process
 let configFile = "";
+let logFile = "";
 let javaHome = "";
-ipcRenderer.on("get-basic-vars", (_ev, args) => {
-    configFile = args[0] + path.sep + "config.json";
-    javaHome = args[1];
+let args = ipcRenderer.sendSync("get-basic-vars", []);
+configFile = args[0] + path.sep + "config.json";
+logFile = args[0] + path.sep + "latest.log";
+javaHome = args[1];
+
+log4js.configure({
+    appenders: {
+        out: { type: "stdout" },
+        file: {
+            type: "file",
+            filename: logFile,
+        },
+    },
+    categories: {
+        index: { appenders: ["out", "file"], level: "debug" },
+        auth: { appenders: ["out", "file"], level: "debug" },
+        route: { appenders: ["out", "file"], level: "debug" },
+        core: { appenders: ["out", "file"], level: "debug" },
+        minecraft: { appenders: ["out", "file"], level: "debug" },
+        default: { appenders: ["out", "file"], level: "debug" },
+    },
 });
 
+const { readProperty } = require("@/renderer/property");
+const { onRouteChange } = require("@/renderer/route");
+
+// init logger
 const li = log4js.getLogger("index");
 
 li.info("### Web Page Started to Load ###");
@@ -90,4 +113,4 @@ if (readProperty("installed") !== true) {
     onRouteChange("installer", "");
 }
 
-export { App, i18n, router, configFile, javaHome };
+export { App, i18n, router, configFile, logFile, javaHome, log4js };

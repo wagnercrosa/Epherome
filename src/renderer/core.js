@@ -2,7 +2,8 @@ import { spawn } from "child_process";
 import StreamZip from "node-stream-zip";
 import os from "os";
 import fs from "fs";
-import { log4js, removeSuffix, removePrefix } from "@/renderer/utils";
+import { removeSuffix, removePrefix } from "@/renderer/utils";
+import { log4js } from "@/renderer/main";
 
 const OPERATING_SYSTEM = os.platform();
 const OPERATING_VERSION = os.release();

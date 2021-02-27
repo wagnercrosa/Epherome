@@ -6,7 +6,8 @@ import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
 import log4js from "log4js";
 import os from "os";
 import "@/main/config";
-import "@/main/system";
+import { getWindowSettings } from "@/main/system";
+import { readConfig } from "@/main/config";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 const userDataPath = app.getPath("userData");
@@ -14,11 +15,12 @@ const userDataPath = app.getPath("userData");
 log4js.configure({
     appenders: {
         out: { type: "stdout" },
+        file: { type: "file", filename: userDataPath + "/latest.log" },
     },
     categories: {
-        starter: { appenders: ["out"], level: "debug" },
-        property: { appenders: ["out"], level: "debug" },
-        default: { appenders: ["out"], level: "debug" },
+        starter: { appenders: ["out", "file"], level: "debug" },
+        property: { appenders: ["out", "file"], level: "debug" },
+        default: { appenders: ["out", "file"], level: "debug" },
     },
 });
 
@@ -41,17 +43,7 @@ protocol.registerSchemesAsPrivileged([
 let win = undefined;
 
 async function createWindow() {
-    win = new BrowserWindow({
-        width: 800,
-        height: 600,
-        backgroundColor: "#e0e0e0",
-        autoHideMenuBar: true,
-        frame: false,
-        webPreferences: {
-            nodeIntegration: true,
-            webSecurity: false,
-        },
-    });
+    win = new BrowserWindow(getWindowSettings(readConfig("title-theme", "eph")));
 
     if (process.env.WEBPACK_DEV_SERVER_URL) {
         await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
@@ -59,10 +51,6 @@ async function createWindow() {
         createProtocol("app");
         await win.loadURL("app://./index.html");
     }
-
-    win.on("ready-to-show", () => {
-        win.webContents.send("get-basic-vars", [userDataPath, process.env.JAVA_HOME]);
-    });
 }
 
 app.on("window-all-closed", () => {

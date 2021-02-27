@@ -1,24 +1,12 @@
 "use strict";
 
-import { log4js, isEmpty, isNotEmpty, e } from "@/renderer/utils";
-import { App as vm, i18n, router } from "@/renderer/main";
+import { isEmpty, isNotEmpty } from "@/renderer/utils";
+import { App as vm, i18n, router, log4js } from "@/renderer/main";
 
 const lr = log4js.getLogger("route");
 
 // update pages
 function onRouteChange(to, from) {
-    // clean app bar
-    switch (from) {
-        case "accounts":
-            e("tgllr-acc").classList.remove("eph-btn-active");
-            break;
-        case "profiles":
-            e("tgllr-pro").classList.remove("eph-btn-active");
-            break;
-        case "settings":
-            e("tgllr-set").classList.remove("eph-btn-active");
-            break;
-    }
     // if current pages is home pages
     if (to === "" && from !== "") {
         vm.methods.updateTitle("Epherome");
@@ -28,15 +16,12 @@ function onRouteChange(to, from) {
         switch (to) {
             case "accounts":
                 vm.methods.updateTitle(i18n.messages[i18n.locale]["accounts"]);
-                e("tgllr-acc").classList.add("eph-btn-active");
                 break;
             case "profiles":
                 vm.methods.updateTitle(i18n.messages[i18n.locale]["profiles"]);
-                e("tgllr-pro").classList.add("eph-btn-active");
                 break;
             case "settings":
                 vm.methods.updateTitle(i18n.messages[i18n.locale]["settings"]);
-                e("tgllr-set").classList.add("eph-btn-active");
                 break;
             case "new-acc":
                 vm.methods.updateTitle(i18n.messages[i18n.locale]["new-account"]);
@@ -81,6 +66,9 @@ function backPage() {
 function jumpPage(name) {
     let page = getPage();
     let uri = location.hash.substr(1); // current uri from the location hash
+    if (uri.trim() === "/") {
+        uri = "";
+    }
     if (page !== name) {
         onRouteChange(name, page); // update pages
         router.replace(uri + "/" + name); // append pages on the current uri

@@ -18,10 +18,12 @@
             </v-list-item>
         </v-list>
         <v-container>
-            <v-alert dense border="left" v-if="alphaWarn" color="warning white--text">
-                <v-icon color="white">warning</v-icon>
-                <span style="padding-right: 5px;">{{ $t("text.alpha-warn") }}</span>
-                <a v-on:click="alphaWarn = false">{{ $t("dismiss") }}</a>
+            <v-alert border="left" v-if="alphaWarn" color="info white--text" dense>
+                <v-icon color="white">info</v-icon>
+                <span style="padding-left: 5px; padding-right: 5px;">{{
+                    $t("text.alpha-warn")
+                }}</span>
+                <a style="color: #ffc107;" v-on:click="alphaWarn = false">{{ $t("dismiss") }}</a>
             </v-alert>
 
             <v-row>
@@ -42,11 +44,23 @@
                         ></v-select>
                         <p v-else>{{ $t("text.no-profile-please-create") }}</p>
                         <br />
-                        <v-btn color="blue-grey white--text" v-on:click="launch">
+                        <v-btn color="blue-grey white--text" v-on:click="launch" large depressed>
                             <v-icon>launch</v-icon>
-                            {{ $t("launch") }} Minecraft
-                        </v-btn>
-                    </v-card>
+                            {{ $t("launch") }}
+                        </v-btn> </v-card
+                    ><br />
+                    <v-btn color="info" v-on:click="jump('accounts')" depressed>
+                        <v-icon>account_circle</v-icon>
+                        {{ $t("accounts") }} </v-btn
+                    ><br /><br />
+                    <v-btn color="info" v-on:click="jump('profiles')" depressed>
+                        <v-icon>games</v-icon>
+                        {{ $t("profiles") }} </v-btn
+                    ><br /><br />
+                    <v-btn color="info" v-on:click="jump('settings')" depressed>
+                        <v-icon>settings</v-icon>
+                        {{ $t("settings") }} </v-btn
+                    ><br /><br />
                 </v-col>
                 <v-col>
                     <v-card color="blue darken-4 white--text" elevation="6" style="padding: 10px">
@@ -156,9 +170,11 @@
 
 <script>
 import { readProperty, writeProperty, operateProperty } from "@/renderer/property";
-import { getArrayElementById, log4js, resolveAuthServerURL } from "@/renderer/utils";
+import { getArrayElementById, resolveAuthServerURL } from "@/renderer/utils";
+import { log4js } from "@/renderer/main";
 import { MOJANG_AUTHSERVER_URL, authenticate, refresh, validate } from "@/renderer/auth";
 import { launchMinecraft } from "@/renderer/core";
+import { jumpPage } from "@/renderer/route";
 
 const l = log4js.getLogger("default");
 
@@ -217,6 +233,9 @@ export default {
                 .then(resp => resp.json())
                 .then(json => (this.hitokoto = json));
         },
+        jump(name) {
+            jumpPage(name);
+        },
         launch() {
             const continueStartMinecraft = () => {
                 this.details[0].stat = true;
@@ -240,7 +259,7 @@ export default {
                     }
                 );
             };
-            if (typeof this.select !== "undefined" || typeof this.account !== "undefined") {
+            if (typeof this.select !== "undefined" && typeof this.account !== "undefined") {
                 this.launchDialog = true;
                 this.details = [];
                 this.details.push({

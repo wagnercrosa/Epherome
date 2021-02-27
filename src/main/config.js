@@ -4,12 +4,17 @@ import { ipcMain, app } from "electron";
 import fs from "fs-extra";
 import log4js from "log4js";
 
-const configFile = app.getPath("userData") + "/config.json";
+const userDataPath = app.getPath("userData");
+const configFile = userDataPath + "/config.json";
 const lp = log4js.getLogger("property");
 let property = {};
 
 fs.ensureFileSync(configFile);
-property = fs.readJSONSync(configFile);
+try {
+    property = fs.readJSONSync(configFile);
+} catch (e) {
+    property = {};
+}
 if (typeof property["language"] === "undefined") {
     lp.warn("Property language not exist, creating");
     let sysLang = app.getLocale().toLowerCase();
@@ -25,7 +30,19 @@ if (typeof property["java-path"] === "undefined") {
     lp.warn("Property java-path not exist, creating");
     property["java-path"] = "java";
 }
+if (typeof property["title-theme"] === "undefined") {
+    lp.warn("Property title-theme not exist, creating");
+    property["title-theme"] = "eph";
+}
 saveToDisk();
+
+function readConfig(key, def) {
+    let val = property[key];
+    if (typeof val === "undefined") {
+        val = def;
+    }
+    return val;
+}
 
 function saveToDisk() {
     fs.writeFileSync(configFile, JSON.stringify(property));
@@ -46,3 +63,5 @@ ipcMain.on("property-set", (_ev, args) => {
     property[args[0]] = args[1];
     saveToDisk();
 });
+
+export { readConfig };

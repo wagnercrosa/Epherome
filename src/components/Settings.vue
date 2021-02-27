@@ -27,6 +27,8 @@
                     prepend-icon="local_cafe"
                     :label="$t('java-path')"
                 ></v-text-field>
+                <v-btn color="warning" v-on:click="reInit" depressed>{{ $t("reinit") }}</v-btn
+                ><br /><br />
                 <v-btn
                     color="secondary white--text"
                     v-on:click="backPage"
@@ -41,7 +43,28 @@
             </v-container>
         </v-tab-item>
         <v-tab-item>
-            <v-container>{{ $t("text.no-appearance-settings-now") }}</v-container>
+            <v-container>
+                <v-select
+                    v-model="selectedTitleTheme"
+                    prepend-icon="calendar_view_day"
+                    :label="$t('title-theme')"
+                    :items="titleThemes"
+                    item-text="text"
+                    item-value="name"
+                ></v-select>
+                <p>{{ $t("text.restart-required") }}</p>
+                <v-btn
+                    color="secondary white--text"
+                    v-on:click="backPage"
+                    style="margin-right: 5px"
+                    depressed
+                >
+                    {{ $t("cancel") }}
+                </v-btn>
+                <v-btn color="info white--text" v-on:click="saveAppearance" depressed>{{
+                    $t("save")
+                }}</v-btn>
+            </v-container>
         </v-tab-item>
         <v-tab-item>
             <v-container>
@@ -54,8 +77,12 @@
                 ><br />
                 <span>V8: {{ v8Version }}</span
                 ><br /><br />
+                <span>{{ $t("os") }}: {{ operatingSystem }}</span
+                ><br /><br />
                 <span>
                     {{ $t("user-data-path") }}: <strong>{{ configFile }}</strong> </span
+                ><br /><span>
+                    {{ $t("log-path") }}: <strong>{{ logFile }}</strong> </span
                 ><br /><br />
                 <span>
                     {{ $t("official-site") }}:
@@ -78,12 +105,12 @@
 </template>
 
 <script>
-import { log4js } from "@/renderer/utils";
 import { readProperty, writeProperty } from "@/renderer/property";
 import { backPage, onRouteChange } from "@/renderer/route";
 import Epherome from "@/renderer/epherome";
 import { shell } from "electron";
-import { configFile as cf, i18n } from "@/renderer/main";
+import os from "os";
+import { configFile as cf, logFile as lf, i18n, log4js, router } from "@/renderer/main";
 
 const openExternal = shell.openExternal;
 const l = log4js.getLogger("default");
@@ -99,6 +126,8 @@ export default {
             nodeVersion: process.versions.node,
             v8Version: process.versions.v8,
             configFile: cf,
+            logFile: lf,
+            operatingSystem: `${os.platform()} ${os.arch()} ${os.release()}`,
             langs: [
                 {
                     locale: "zh-cn",
@@ -116,17 +145,33 @@ export default {
             formerLang: readProperty("language"),
             selectedLang: readProperty("language"),
             javaPathContent: readProperty("java-path"),
+            selectedTitleTheme: readProperty("title-theme"),
+            titleThemes: [
+                {
+                    name: "eph",
+                    text: "Epherome",
+                },
+                {
+                    name: "os",
+                    text: "Operating System",
+                },
+            ],
         };
     },
     methods: {
         backPage() {
             backPage();
         },
+        reInit() {
+            router.replace("/installer");
+            onRouteChange("installer", "");
+            onRouteChange();
+        },
         openExternal(url) {
             openExternal(url);
         },
         saveAll() {
-            l.info("Save all settings triggered, saving");
+            l.info("Save general settings triggered, saving");
             writeProperty("java-path", this.javaPathContent);
             l.debug("Java path: " + this.javaPathContent);
             writeProperty("language", this.selectedLang);
@@ -136,6 +181,10 @@ export default {
                 i18n.locale = this.selectedLang;
                 onRouteChange("settings", "");
             }
+        },
+        saveAppearance() {
+            l.info("Save appearance settings triggered, saving");
+            writeProperty("title-theme", this.selectedTitleTheme);
         },
     },
 };

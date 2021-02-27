@@ -6,8 +6,8 @@ v<template>
                 {{ $t("create") }}
             </v-btn>
             <br /><br />
-            <v-alert border="left" color="warning white--text" v-if="accounts.length === 0">
-                <v-avatar><v-icon color="white">warning</v-icon></v-avatar>
+            <v-alert border="left" color="warning white--text" v-if="accounts.length === 0" dense>
+                <v-icon color="white">warning</v-icon>
                 <span>{{ $t("text.no-account-please-create") }}</span>
             </v-alert>
             <v-list-item v-for="a in accounts" :key="a.id" two-line v-else>
@@ -80,7 +80,7 @@ v<template>
 </template>
 
 <script>
-import { log4js } from "@/renderer/utils";
+import { log4js } from "@/renderer/main";
 import { jumpPage } from "@/renderer/route";
 import { readProperty, writeProperty, operateProperty } from "@/renderer/property";
 const l = log4js.getLogger("default");
